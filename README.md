@@ -57,8 +57,9 @@ It provides real-time monitoring of network activity and simplifies firewall rul
 
 ##  Notes
 
-1 Works on **Windows only**
-2 Requires **Windows Firewall** enabled to function properly
+1 Works on Windows only
+2 Requires Windows Firewall enabled to function properly
 
 ---
+
 
