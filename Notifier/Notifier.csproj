@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>Notifier</AssemblyName>
+    <RootNamespace>Wokhan.WindowsFirewallNotifier.Notifier</RootNamespace>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <Description>Windows Firewall Notifier - Notification handler</Description>
+    <Product>Windows Firewall Notifier</Product>
+    <Copyright>2011-2021 Wokhan and others (https://github.com/wokhan/WFN)</Copyright>
+    <Authors>Wokhan Solutions, Harrwiss</Authors>
+    <OutputPath>..\bin\$(ConfigurationName)</OutputPath>
+    <Company>Wokhan Solutions</Company>
+    <ApplicationIcon>TrayIcon22.ico</ApplicationIcon>
+    <Nullable>warnings</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Helpers\SingleInstanceApp.cs_" />
+    <None Remove="Program.cs_" />
+    <None Remove="Properties\AssemblyInfo.cs_" />
+    <None Remove="Resources\WFN.ico" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Resource Include="Resources\WFN.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>-->
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="Wokhan.UI" Version="0.9.8-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.NetFwTypeLib">
+      <HintPath>..\Interop\Interop.NetFwTypeLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Resource Include="Resources\TrayIconBlocked.ico" />
+    <Resource Include="Resources\TrayIconBlocked2.ico" />
+    <Resource Include="Resources\TrayIconBlocked3.ico" />
+    <Resource Include="Resources\TrayIcon2.ico" />
+    <Resource Include="Resources\TrayIcon3.ico" />
+    <Resource Include="Resources\TrayIcon2off.ico" />
+    <Resource Include="Resources\TrayIcon21.ico" />
+    <Resource Include="Resources\TrayIcon22.ico" />
+    <Resource Include="Resources\TrayIcon23.ico" />
+    <Resource Include="Resources\TrayIcon24.ico" />
+    <Resource Include="Resources\TrayIcon1.ico" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

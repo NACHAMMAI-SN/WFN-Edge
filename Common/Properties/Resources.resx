@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MSG_DLG_ERR_TITLE" xml:space="preserve">
+    <value>Windows Firewall Notifier - Error</value>
+  </data>
+  <data name="MSG_DLG_TITLE" xml:space="preserve">
+    <value>Windows Firewall Notifier</value>
+  </data>
+  <data name="MSG_INST_OK" xml:space="preserve">
+    <value>Windows Firewall Notifier notifications have been enabled.</value>
+  </data>
+  <data name="FW_PROFILE_DOMAIN" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="MSG_INST_ENABLE_LOG_ERR" xml:space="preserve">
+    <value>An error occured while updating the local strategy policy.
+Aborting installation.</value>
+  </data>
+  <data name="MSG_ALLOW" xml:space="preserve">
+    <value>Allow: a firewall rule will be created for the concerned application,
+except if you tick the checkbox below to allow it temporarily.</value>
+  </data>
+  <data name="FW_PROFILE_ALL" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="FW_PROFILE_PUBLIC" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="MSG_RULE_RM_FAILED" xml:space="preserve">
+    <value>The temporary rule could not be removed.
+The application outgoing connections are still allowed.
+Please check the Windows Firewall for a rule named {0}.</value>
+  </data>
+  <data name="FW_RULE_BLOCK" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="MSG_UNINST_OK" xml:space="preserve">
+    <value>Windows Firewall Notifier has been successfully disabled.
+You can safely remove the application folder.</value>
+  </data>
+  <data name="FW_PROFILE_PRIVATE" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="FW_RULE_ALLOW" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="MSG_UNINST_UNBLOCK_ERR" xml:space="preserve">
+    <value>An error occured while restoring the default Windows Firewall behavior.</value>
+  </data>
+  <data name="MSG_INST_TASK_ERR" xml:space="preserve">
+    <value>An error occured while creating the Windows Firewall Notifier task.
+Aborting activation.</value>
+  </data>
+  <data name="MSG_INST_ENABLE_FW_ERR" xml:space="preserve">
+    <value>Unable to enable the Windows Firewall.\r\n
+Aborting installation.</value>
+  </data>
+  <data name="FW_DIR_IN" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="MSG_RULE_DELETE" xml:space="preserve">
+    <value>You are going to remove the selected firewall rule.
+Continue?</value>
+  </data>
+  <data name="MSG_RULE_FAILED" xml:space="preserve">
+    <value>The corresponding rule has not been created.</value>
+  </data>
+  <data name="MSG_RULE_CREATED" xml:space="preserve">
+    <value>The corresponding rule has been created.</value>
+  </data>
+  <data name="MSG_BLOCK" xml:space="preserve">
+    <value>Ignore: adds the concerned application to the WFN exceptions list
+to prevent any further notification.
+You will be able to remove this exception through the WFN options screen.</value>
+  </data>
+  <data name="MSG_UNINST_DISABLE_LOG_ERR" xml:space="preserve">
+    <value>An error occured while restoring the local strategy policy</value>
+  </data>
+  <data name="FW_DIR_OUT" xml:space="preserve">
+    <value>Out</value>
+  </data>
+  <data name="MSG_UNINST_TASK_ERR" xml:space="preserve">
+    <value>An error occured while removing the Windows Firewall Notifier task.
+This application has NOT been totally disabled.</value>
+  </data>
+  <data name="FW_DIR_BOTH" xml:space="preserve">
+    <value>In/Out</value>
+  </data>
+  <data name="FILENAME_UPDATE" xml:space="preserve">
+    <value>WFN_update.txt</value>
+  </data>
+  <data name="FILENAME_VERSION" xml:space="preserve">
+    <value>WFN_version.txt</value>
+  </data>
+  <data name="FW_TITLE" xml:space="preserve">
+    <value>{0} outgoing connection(s) blocked</value>
+  </data>
+  <data name="MSG_LOG_FAILED" xml:space="preserve">
+    <value>Failed to write to log file. Please make sure the log file is not in use by another program.</value>
+  </data>
+  <data name="MSG_RULEMANAGER_ARGUMENTS_ERR" xml:space="preserve">
+    <value>RuleManager cannot be run manually.</value>
+  </data>
+  <data name="MSG_RULE_PROTOCOL_NEEDED" xml:space="preserve">
+    <value>A protocol must be specified in order to be able to base rules on ports.</value>
+  </data>
+  <data name="RULE_NAME_FORMAT" xml:space="preserve">
+    <value>[WFN] - {0}</value>
+    <comment>Prefix and format for rules creation in the windows firewall. The '-' is required i.e. 1. part filter prefix, 2. part rule name</comment>
+  </data>
+  <data name="SERVICES_MULTIPLE" xml:space="preserve">
+    <value>Multiple matches found.</value>
+  </data>
+  <data name="SERVICES_NONE" xml:space="preserve">
+    <value>No services found.</value>
+  </data>
+  <data name="FW_RULE_SKIP" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="FW_RULE_SKIP_PROGRAM" xml:space="preserve">
+    <value>Skip program</value>
+  </data>
+  <data name="FW_RULE_SKIP_ALL" xml:space="preserve">
+    <value>Skip all</value>
+  </data>
+  <data name="RULE_TEMP_SUFFIX" xml:space="preserve">
+    <value>Temporary rule</value>
+    <comment>Temporary rule suffix</comment>
+  </data>
+  <data name="RULE_TEMP_DESCRIPTION" xml:space="preserve">
+    <value>Temporary rules have been created - click the shield icon to remove them.</value>
+    <comment>Show as ballon tip for the temporary notifier icon and message center</comment>
+  </data>
+  <data name="MSG_RULE_DELETE_FAILED" xml:space="preserve">
+    <value>Could not delete the rule.</value>
+  </data>
+  <data name="FW_RULE_ADVANCED" xml:space="preserve">
+    <value>Advanced rule settings</value>
+  </data>
+  <data name="TXT_LOCAL_PORTS" xml:space="preserve">
+    <value>Local port: {0}</value>
+  </data>
+  <data name="TXT_LOCAL_PORTS_TOOLTIP" xml:space="preserve">
+    <value>Local ports:</value>
+  </data>
+  <data name="TXT_REMOTE_PORTS" xml:space="preserve">
+    <value>Remote port: {0}</value>
+  </data>
+  <data name="TXT_REMOTE_PORTS_TOOLTIP" xml:space="preserve">
+    <value>Remote ports:</value>
+  </data>
+  <data name="TXT_SERVICES" xml:space="preserve">
+    <value>Service: {0}</value>
+  </data>
+  <data name="TXT_SERVICES_TOOLTIP" xml:space="preserve">
+    <value>Services:</value>
+  </data>
+  <data name="NotifierTrayIcon_DiscardAndClose" xml:space="preserve">
+    <value>Exit Notifier</value>
+  </data>
+  <data name="NotifierTrayIcon_NotifierStaysHiddenWhenMinimizedClickToOpen" xml:space="preserve">
+    <value>Notifier stays hidden when minimized - click to open it.</value>
+  </data>
+  <data name="NotifierTrayIcon_OpenConsole" xml:space="preserve">
+    <value>Open Console</value>
+  </data>
+  <data name="NotifierTrayIcon_ShowActivity_Notifier" xml:space="preserve">
+    <value>Open Notifier</value>
+  </data>
+  <data name="NotifierTrayIcon_ShowBalloonTip_WFNNotifier" xml:space="preserve">
+    <value>WFN Notifier</value>
+  </data>
+  <data name="NotifierTrayIcon_ShowNotifier" xml:space="preserve">
+    <value>Show Notifier</value>
+  </data>
+  <data name="ActivityWindow_DiscardAndClose" xml:space="preserve">
+    <value>Exit Notifier</value>
+  </data>
+  <data name="ActivityWindow_OpenConsole" xml:space="preserve">
+    <value>Open Console</value>
+  </data>
+  <data name="ActivityWindow_ShowNotifier" xml:space="preserve">
+    <value>Show Notifier</value>
+  </data>
+  <data name="ActivityWindow_ClickableIcon_Tooltip" xml:space="preserve">
+    <value>Click to open Notifier or press and hold left mouse button to move</value>
+  </data>
+  <data name="Status_Heading1" xml:space="preserve">
+    <value>WFN is not a firewall and relies on the Windows embedded firewall when it comes to connections filtering. The table below shows the current Windows firewall status and allows you to manage the same directly.</value>
+  </data>
+  <data name="Status_NoteAboutProfiles" xml:space="preserve">
+    <value>Note: if you don't know what a profile is all about, the private one usually refers to your home network, while the public one is for public places (restaurant, hotels...). A domain profile is usually for workplaces.</value>
+  </data>
+  <data name="Status_FooterRemark" xml:space="preserve">
+    <value>* WFN is notified everytime an outgoing connection is blocked by the windows firewall. Notifications are shown in Notifier or alternatively in the security log menu. Enabling this option is recommended since you wouldn't get notified at all otherwise.</value>
+  </data>
+  <data name="Status_WindowsFirewallGlobalStatus" xml:space="preserve">
+    <value>Windows firewall global status</value>
+  </data>
+  <data name="Status_DefaultActionsWhenNoFilteringRuleMatches" xml:space="preserve">
+    <value>Default actions (when no filtering rule matches)</value>
+  </data>
+  <data name="RULE_NAME_FILTER_PREFIX2" xml:space="preserve">
+    <value>Custom Rule</value>
+    <comment>Alternate filter prefix (corresponds to old filter prefix)</comment>
+  </data>
+  <data name="RULE_NAME_FILTER_PREFIX3" xml:space="preserve">
+    <value>[MY_RULE]</value>
+    <comment>Alternative filter prefix for my custom rules</comment>
+  </data>
+  <data name="RULE_TEMP_PREFIX" xml:space="preserve">
+    <value>#</value>
+    <comment>Prefix for temporary rules e.g RULE_TEMP_PREFIX + FULE_NAME_FORMAT</comment>
+  </data>
+  <data name="RULE_TEMP_TITLE" xml:space="preserve">
+    <value>Temporary rule</value>
+    <comment>Ballon tip title for temporary tray icon</comment>
+  </data>
+  <data name="RULE_WSH_PREFIX" xml:space="preserve">
+    <value>WSH -</value>
+    <comment>Windows hidden rules prefix</comment>
+  </data>
+  <data name="RULE_TEMP_DESCRIPTION_SHORT" xml:space="preserve">
+    <value>Click icon to remove temporary rules</value>
+    <comment>Shown as tooltip on the temporary notifier icon</comment>
+  </data>
+  <data name="ActivityWindow_HideThisWindow" xml:space="preserve">
+    <value>Hide this window</value>
+  </data>
+  <data name="NotifierTrayIcon_ShowActivityWindow" xml:space="preserve">
+    <value>Show Activity Window</value>
+  </data>
+  <data name="GeoConnection2_CannotRetrieveConnectionLocationForPublicIp" xml:space="preserve">
+    <value>Cannot retrieve connection location for public ip - connection may be blocked by the firewall. 
+You may need to create a rule for WFN in the Notifier to unblock it.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Notifier" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\notifier.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FW_TITLE_NO_CONNECTION" xml:space="preserve">
+    <value>No blocked connections detected.</value>
+  </data>
+  <data name="ActivityWindow_OrientationHorizontal" xml:space="preserve">
+    <value>Switch to horizontal orientation</value>
+  </data>
+  <data name="ActivityWindow_OrientationVertical" xml:space="preserve">
+    <value>Switch to vertical orientation</value>
+  </data>
+</root>

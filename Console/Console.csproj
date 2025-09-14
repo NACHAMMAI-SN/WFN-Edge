@@ -1,0 +1,155 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>true</ImplicitUsings>
+    <!-- auto-increment version - see: https://stackoverflow.com/a/60571414 -->
+    <!-- TODO: add this to other projects as well? -->
+    <FileVersion>2.6.$([System.DateTime]::UtcNow.Date.Subtract($([System.DateTime]::Parse("2020-01-01"))).TotalDays).$([System.Math]::Floor($([MSBuild]::Divide($([System.DateTime]::UtcNow.TimeOfDay.TotalSeconds), 1.32))))</FileVersion>
+    <!-- Version impacts location of the user.config location, therefore remove the last part (seconds) -->
+    <Version>2.7.$([System.DateTime]::UtcNow.Date.Subtract($([System.DateTime]::Parse("2020-01-01"))).TotalDays)</Version>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>WFN</AssemblyName>
+    <RootNamespace>Wokhan.WindowsFirewallNotifier.Console</RootNamespace>
+    <StartupObject></StartupObject>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <ApplicationIcon>Resources\Images\WFN.ico</ApplicationIcon>
+    <!-- TODO: @wokhan: remove? see Version, FileVersion above --><!--
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>-->
+    <Description>Windows Firewall Notifier - Console</Description>
+    <Product>Windows Firewall Notifier</Product>
+    <Copyright>2011-2022 Wokhan (https://github.com/wokhan/WFN)</Copyright>
+    <Authors>Wokhan Solutions</Authors>
+    <OutputPath>..\bin\$(ConfigurationName)</OutputPath>
+    <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <!-- @wokhan: was portable before -enabled because some breakpoints did not trigger -->
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\AssemblyInfo.cs" />
+    <Compile Remove="UI\Pages\Monitor.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Backgrounds\BG %281%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %2810%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %282%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %283%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %284%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %285%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %286%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %287%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %288%29.jpg" />
+    <None Remove="Resources\Backgrounds\BG %289%29.jpg" />
+    <None Remove="Resources\Images\WFN-Logo-Transparent.ico" />
+    <None Remove="Resources\Images\WFN-Logo-Transparent.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="UI\Pages\Monitor.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CountryFlag.Wpf" Version="1.0.0" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc2" />
+    <PackageReference Include="Mapsui.Wpf" Version="5.0.0-beta.1" />
+    <PackageReference Include="MaxMind.Db" Version="4.1.0" />
+    <PackageReference Include="MaxMind.GeoIP2" Version="5.2.0" />
+    <!--<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>-->
+    <PackageReference Include="Wokhan.Core" Version="0.9.8-beta" />
+    <PackageReference Include="Wokhan.UI" Version="0.9.8-beta" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\IPDatabase\GeoLite2-City.mmdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\app.manifest" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Backgrounds\BG (1).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (10).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (2).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (3).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (4).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (5).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (6).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (7).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (8).jpg" />
+    <Resource Include="Resources\Backgrounds\BG (9).jpg" />
+    <Resource Include="Resources\Images\WFN-Logo-Transparent.ico" />
+    <Resource Include="Resources\Images\WFN-Logo-Transparent.png" />
+    <Resource Include="Resources\Images\WFN Logo.png" />
+    <Resource Include="Resources\Images\WFN.ico" />
+    <Resource Include="Resources\Shield.ico" />
+    <EmbeddedResource Include="Resources\TaskTemplate.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\IPDatabase\LICENSE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\IPDatabase\COPYRIGHT.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="DisableWFN.cmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Interop.NetFwTypeLib">
+      <HintPath>..\Interop\Interop.NetFwTypeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device">
+      <HintPath>..\TempSharedLib\System.Device.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="version.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\btnLEvents.Image.png" />
+    <Resource Include="Resources\Images\btnOpenConsole.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.fr.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup Label="DummyDataHelpers">
+    <Compile Update="**/*.Dummy.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace(".Dummy",".cs"))</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

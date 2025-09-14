@@ -1,0 +1,293 @@
+﻿<Window xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Wokhan.WindowsFirewallNotifier.Notifier.UI.Windows.NotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:resx="clr-namespace:Wokhan.WindowsFirewallNotifier.Common.Properties;assembly=Wokhan.WindowsFirewallNotifier.Common"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        xmlns:settings="clr-namespace:Wokhan.WindowsFirewallNotifier.Common.Config;assembly=Wokhan.WindowsFirewallNotifier.Common"
+        xmlns:sampleApp="clr-namespace:Wokhan.WindowsFirewallNotifier.Notifier" 
+        xmlns:bindingconverters="clr-namespace:Wokhan.UI.BindingConverters;assembly=Wokhan.UI" 
+        xmlns:controls="clr-namespace:Wokhan.UI.Xaml.Controls;assembly=Wokhan.UI" 
+        xmlns:ext="clr-namespace:Wokhan.UI.Xaml.Extensibility;assembly=Wokhan.UI"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        Title="WFN - Notification" 
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        SizeToContent="Height"
+        Width="500"
+        Icon="/Notifier;component/Resources/TrayIcon22.ico"
+        Topmost="True"
+        x:Name="NotifWindow"
+        WindowStartupLocation="Manual"
+        UseLayoutRounding="True"
+        ScrollViewer.CanContentScroll="False"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" 
+        Visibility="Visible" 
+        Loaded="NotificationWindow_Loaded" 
+        Initialized="NotificationWindow_Initialized" 
+        MouseEnter="NotificationWindow_MouseEnter" 
+        MouseLeave="NotifWindow_MouseLeave" 
+        WindowState="Normal"
+        StateChanged="NotificationWindow_StateChanged" 
+        ResizeMode="CanMinimize" 
+        d:DesignHeight="300">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Wokhan.WindowsFirewallNotifier.Common;component/UI/Themes/Light.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Key="animate">
+                <ThicknessAnimation Storyboard.TargetProperty="Margin" From="250,0,-250,0" To="0,0,0,0" Duration="0:0:0.5" />
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0.9" Duration="0:0:0.5" FillBehavior="HoldEnd" />
+            </Storyboard>
+            <bindingconverters:BooleanNegateConverter x:Key="booleanNegate" />
+            <bindingconverters:ValueToVisibilityConverter x:Key="valueToVisibility" />
+            <bindingconverters:ValueToVisibilityNegateConverter x:Key="valueToVisibilityNegate" />
+            <bindingconverters:ObjectToBoolConverter x:Key="objectToBoolean" />
+            <settings:Settings x:Key="WFN" />
+            <Style x:Key="TitleBarButton" TargetType="Button">
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border" Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" x:Name="Main">
+        <controls:CustomWindowChrome Height="28" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" DockPanel.Dock="Top" CanClose="False">
+            <UniformGrid Grid.Column="2" Rows="1">
+                <Button Padding="10,0" Style="{StaticResource TitleBarButton}" IsEnabled="{Binding NbConnectionsBefore,Mode=OneWay,Converter={StaticResource objectToBoolean}}" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrush}}" Click="btnPrev_Click">
+                    <TextBlock Text="{Binding NbConnectionsBefore,Mode=OneWay,FallbackValue='&lt; Prev. (0)',StringFormat='&lt; Prev. ({0})'}" />
+                </Button>
+                <Button Padding="10,0" Style="{StaticResource TitleBarButton}" IsEnabled="{Binding NbConnectionsAfter,Mode=OneWay,Converter={StaticResource objectToBoolean}}"  Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrush}}" Click="btnNext_Click">
+                    <TextBlock Text="{Binding NbConnectionsAfter,Mode=OneWay,FallbackValue='Next (0) &gt;',StringFormat='Next (\{0}) &gt;'}" />
+                </Button>
+            </UniformGrid>
+        </controls:CustomWindowChrome>
+        <Border>
+            <Grid x:Name="MainGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid x:Name="gridConnections" SizeChanged="expand_SizeChanged" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Margin="0,0,0,5" >
+                    <ListView VirtualizingPanel.ScrollUnit="Item" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectedIndex="0" Visibility="{Binding HasItems,RelativeSource={RelativeSource Mode=self},Converter={StaticResource valueToVisibility}}"  SelectionMode="Single" x:Name="lstConnections" Background="Transparent" ItemsSource="{Binding Connections}" DataContext="{x:Static Application.Current}" d:DataContext="{d:DesignInstance Type=sampleApp:AppDataSample, IsDesignTimeCreatable=True}" MinHeight="41.6">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard Duration="0:0:1" SpeedRatio="2">
+                                                    <ThicknessAnimation From="300,0,0,0" To="0,0,0,0" Duration="0:0:0:0.5" Storyboard.TargetProperty="Margin" />
+                                                    <DoubleAnimation From="0" To="1" Storyboard.TargetProperty="Opacity" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="{Binding ActualWidth,ElementName=gridConnections}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image VerticalAlignment="Center" Margin="5,0,0,0" Grid.Column="0" Height="32" MinWidth="32" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Icon,Mode=OneWay}" />
+                                    <StackPanel VerticalAlignment="Center" Margin="5" Grid.Column="1">
+                                        <TextBlock FontWeight="Bold" Text="{Binding Description,Mode=OneWay}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding ServiceName,Mode=OneWay}" Visibility="{Binding ServiceName,Mode=OneWay,Converter={StaticResource valueToVisibility}}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="10" />
+                                        <TextBlock Text="{Binding ProductName,Mode=OneWay}" Visibility="{Binding ProductName,Mode=OneWay,Converter={StaticResource valueToVisibility}}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="10" />
+                                    </StackPanel>
+                                    <TextBlock Margin="5,5" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding TentativesCounter,Mode=OneWay,StringFormat='Attempts: {0}'}" FontSize="10" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Margin="10" Visibility="{Binding HasItems,Mode=OneWay,ElementName=lstConnections,Converter={StaticResource valueToVisibilityNegate}}" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Text="Currently there are no blocked connections to show." />
+                </Grid>
+                <Grid Grid.Row="1" Visibility="{Binding HasItems,Mode=OneWay,ElementName=lstConnections,Converter={StaticResource valueToVisibility}}" Height="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <UniformGrid Columns="2" HorizontalAlignment="Center">
+                        <Button x:Name="btnAllow" Padding="10" Click="btnAllow_Click">
+                            <ext:CustomAdorner.Image>
+                                <Path Fill="Green" Margin="-3,-3,0,-3" Stretch="Uniform" Data="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" />
+                            </ext:CustomAdorner.Image>
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="Content" Value="Allow this program" />
+                                    <Setter Property="ToolTip" Value="{x:Static resx:Resources.MSG_ALLOW}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsExpanded,ElementName=expand}" Value="True">
+                                            <Setter Property="Content" Value="Allow this connection" />
+                                            <Setter Property="ToolTip" Value="{x:Static resx:Resources.MSG_ALLOW}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="btnBlock" VerticalAlignment="Stretch" Click="btnBlock_Click">
+                            <ext:CustomAdorner.Image>
+                                <Path Fill="Red" Margin="-2,-2,0,-2" Stretch="Uniform" Data="M1,4.27L2.28,3L20.5,21.22L19.23,22.5L17,20.25C15.57,21.57 13.87,22.54 12,23C6.84,21.74 3,16.55 3,11V6.27L1,4.27M12,1L21,5V11C21,13.28 20.35,15.5 19.23,17.41L5.65,3.82L12,1Z" />
+                            </ext:CustomAdorner.Image>
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="Content" Value="Block this program" />
+                                    <Setter Property="ToolTip" Value="{x:Static resx:Resources.MSG_BLOCK}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsExpanded,ElementName=expand}" Value="True">
+                                            <Setter Property="Content" Value="Block this connection" />
+                                            <Setter Property="ToolTip" Value="{x:Static resx:Resources.MSG_BLOCK}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </UniformGrid>
+                    <ComboBox ext:CustomAdorner.PreserveTemplate="True" HorizontalAlignment="Right" Text="Skip..." SelectionChanged="SkipButtonSelectionChanged">
+                        <ext:CustomAdorner.Image>
+                            <Path Height="18" Stretch="Uniform" Data="M3,8 H5V16H3V8 M7,8 H9V16H7V8 M11,8H13V16H11V8 M15,19.25V4.75 L22.25,12 L15,19.25Z" Fill="#FF599CEC" />
+                        </ext:CustomAdorner.Image>
+                        <system:String>this connection</system:String>
+                        <system:String>this program</system:String>
+                        <system:String>all pending notifications</system:String>
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="2" Visibility="{Binding HasItems,Mode=OneWay,ElementName=lstConnections,Converter={StaticResource valueToVisibility}}">
+                    <Expander Padding="5" Header="{x:Static resx:Resources.FW_RULE_ADVANCED}" SizeChanged="expand_SizeChanged" x:Name="expand" IsExpanded="{Binding AlwaysShowDetails,Source={x:Static settings:Settings.Default}}">
+                        <Grid DataContext="{Binding SelectedItem, ElementName=lstConnections}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <!--  <TextBlock Grid.Row="0" Grid.Column="0" Margin="3" FontWeight="Bold" Text="Connection" /> -->
+                            <CheckBox Grid.Row="0" Grid.Column="0" Margin="3" IsChecked="{Binding OptionsView.IsCurrentProfileChecked, ElementName=NotifWindow}" Content="{Binding CurrentProfile,Mode=OneTime, ElementName=NotifWindow, FallbackValue='Unknown'}" ContentStringFormat="Profile: {0}" />
+                            <CheckBox Grid.Row="1" Grid.Column="0" Margin="3" IsChecked="{Binding OptionsView.IsProtocolChecked, ElementName=NotifWindow}" Content="{Binding Protocol,Mode=OneTime,FallbackValue='Unknown'}" ContentStringFormat="Protocol: {0}" />
+                            <CheckBox Grid.Row="2" Grid.Column="0" Margin="3" IsChecked="{Binding OptionsView.IsLocalPortChecked, ElementName=NotifWindow}" ToolTipService.ShowOnDisabled="True">
+                                <TextBlock Text="{Binding SourcePort,Mode=OneWay, FallbackValue='N/A', StringFormat='{x:Static resx:Resources.TXT_LOCAL_PORTS}'}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                <CheckBox.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="{x:Static resx:Resources.TXT_LOCAL_PORTS_TOOLTIP}" />
+                                        <TextBlock Text="{Binding SourcePort,Mode=OneWay}" />
+                                    </StackPanel>
+                                </CheckBox.ToolTip>
+                            </CheckBox>
+                            <CheckBox Grid.Row="2" Grid.Column="1" Margin="3" IsChecked="{Binding OptionsView.IsTargetPortChecked, ElementName=NotifWindow}" ToolTipService.ShowOnDisabled="True">
+                                <TextBlock>
+                                    <Run Text="{x:Static resx:Resources.TXT_REMOTE_PORTS}" />
+                                    <Hyperlink Command="{Binding NavigateToInfoPortCommand,ElementName=NotifWindow}" CommandParameter="{Binding TargetPort,Mode=OneTime}">
+                                        <TextBlock Text="{Binding TargetPort,Mode=OneTime, FallbackValue='N/A'}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                    </Hyperlink>
+                                </TextBlock>
+                                <CheckBox.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="{x:Static resx:Resources.TXT_REMOTE_PORTS_TOOLTIP}" />
+                                        <TextBlock Text="{Binding TargetPort,Mode=OneTime}" />
+                                    </StackPanel>
+                                </CheckBox.ToolTip>
+                            </CheckBox>
+                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="3" IsChecked="{Binding OptionsView.IsTargetIPChecked, ElementName=NotifWindow}">
+                                <TextBlock>
+                                    <Run Text="Target IP:" />
+                                    <Hyperlink Command="{Binding NavigateToInfoUrlCommand,ElementName=NotifWindow}" CommandParameter="{Binding TargetIP,Mode=OneTime}" Foreground="{DynamicResource AccentColorBrush}" TextDecorations="None">
+                                        <Run Text="{Binding TargetIP, FallbackValue='N/A',Mode=OneTime}" ToolTip="{Binding TargetHostName,Mode=OneWay}"/>
+                                    </Hyperlink>
+                                </TextBlock>
+                            </CheckBox>
+                            <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Margin="3" FontWeight="Bold" Text="Application" />
+                            <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="3" IsChecked="{Binding OptionsView.IsPathChecked, ElementName=NotifWindow}">
+                                <TextBlock>
+                                    <Run Text="Path: " />
+                                    <Hyperlink TextDecorations="None" NavigateUri="{Binding Path,Mode=OneWay}" RequestNavigate="hlkPath_Navigate">
+                                        <Run Text="{Binding Path,Mode=OneWay, FallbackValue='N/A'}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </CheckBox>
+                            <CheckBox Grid.Row="0" Grid.Column="1" Margin="3" IsChecked="{Binding OptionsView.IsServiceRuleChecked, ElementName=NotifWindow}">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                        <Setter Property="Content" Value="{x:Static resx:Resources.SERVICES_NONE}" />
+                                        <Setter Property="IsEnabled" Value="{Binding OptionsView.IsService, ElementName=NotifWindow}" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding OptionsView.IsService, ElementName=NotifWindow}" Value="True"/>
+                                                    <Condition Binding="{Binding OptionsView.IsServiceMultiple, ElementName=NotifWindow}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Content" Value="{Binding OptionsView.SingleServiceName, ElementName=NotifWindow, FallbackValue='N/A'}"/>
+                                                <Setter Property="ContentStringFormat" Value="{x:Static resx:Resources.TXT_SERVICES}"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding OptionsView.IsService, ElementName=NotifWindow}" Value="True"/>
+                                                    <Condition Binding="{Binding OptionsView.IsServiceMultiple, ElementName=NotifWindow}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Content" Value="{x:Static resx:Resources.SERVICES_MULTIPLE}" />
+                                                <Setter Property="Foreground" Value="Red" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                            </CheckBox>
+                            <CheckBox Grid.Row="8" Margin="3" IsEnabled="{Binding OptionsView.IsAppEnabled, ElementName=NotifWindow}" IsChecked="{Binding OptionsView.IsAppChecked, ElementName=NotifWindow}" Content="{Binding CurrentAppPkgId,FallbackValue='N/A'}" ContentStringFormat="App: {0}" />
+                            <!--FIXME: Really needs ellipses-->
+                        </Grid>
+                    </Expander>
+                    <CheckBox x:Name="togTempRule" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Apply for this app session only" />
+                    <!--<ComboBox x:Name="togTempRule" Background="LightGray" HorizontalAlignment="Right" VerticalAlignment="Top" SelectedIndex="0">
+                        <Label Content="Remember my decision" ToolTip="You will be notified again once you relaunch the application." />
+                        <Label Content="Apply for this app session only" ToolTip="You will be notified again once you relaunch the application." />
+                        <Label Content="Apply for 5 minutes" ToolTip="You will be notified again once you relaunch the application." />
+                        <Label Content="Apply for 30 minutes" ToolTip="You will be notified again once you relaunch the application." />
+                        <Label Content="Apply for 1 hour" ToolTip="You will be notified again once you relaunch the application." />
+                    </ComboBox>-->
+                </Grid>
+            </Grid>
+        </Border>
+    </DockPanel>
+</Window>
