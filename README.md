@@ -1,7 +1,7 @@
 
 # WFN-Edge
 
-WFN++ is an enhanced Windows desktop application that builds upon the original Windows Firewall Notifier.  
+WFN is an enhanced Windows desktop application that builds upon the original Windows Firewall Notifier.  
 =======
 # WFN
 
@@ -61,3 +61,4 @@ It provides real-time monitoring of network activity and simplifies firewall rul
 2 Requires **Windows Firewall** enabled to function properly
 
 ---
+
